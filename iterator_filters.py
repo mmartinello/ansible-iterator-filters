@@ -4,12 +4,9 @@ class FilterModule(object):
         return {
             'in_list': self.in_list,
         }
+
     def in_list(self, needle, haystack):
-        if isinstance(haystack, str):
-            haystack = [haystack]
-    
-        found = False
-        for k, v in haystack.items():
-            if any(x in needle for x in v):
-                found = True
-        return found
+        if needle in haystack:
+            return True
+        else:
+            return False
