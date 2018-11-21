@@ -30,6 +30,7 @@ class FilterModule(object):
         """
         return {
             'in_list': self.in_list,
+            'in_dict': self.in_dict
         }
 
     def in_list(self, string, list):
