@@ -32,7 +32,9 @@ class FilterModule(object):
             'in_list': self.in_list,
             'in_dict': self.in_dict,
             'in_list_multilist': self.in_list_multilist,
-            'in_list_multidict': self.in_list_multidict
+            'in_list_multidict': self.in_list_multidict,
+            'string_in_dict_multilist': self.string_in_dict_multilist,
+            'list_in_dict_multilist': self.list_in_dict_multilist
         }
 
     def in_list(self, string, list):
@@ -63,8 +65,8 @@ class FilterModule(object):
         Returns:
             True if the string is found, False otherwise.
         """
+        type = type.lower()
         for key, value in dictionary.items():
-            type = type.lower()
             if type == "keys":
                 compare = key
             else:
@@ -111,4 +113,57 @@ class FilterModule(object):
         for dictionary in dictionaries:
             if self.in_dict(string, dictionary, type):
                 return True
+        return False
+
+    def string_in_dict_multilist(self, string, dictionary, type="values"):
+        """Checks if a given value is into one of the lists included
+        into the given dictionary.
+        The function can compare key or values of the dictionary, based on
+        the given type of comparison.
+
+        Args:
+            string(str): the string to look for.
+            dictionary(dict): the dictionary of lists in which the string
+                should be searched.
+            type(str): define if the given string should be searched into keys
+                or values of the given dictionary (possible values:
+                'keys|values', default 'values')
+
+        Returns:
+            True if the string is found, False otherwise.
+        """
+        type = type.lower()
+
+        for key, list in dictionary.items():
+            if type == "keys":
+                if string == key:
+                    return True
+            else:
+                if self.in_list(string, list):
+                    return True
+        return False
+
+    def list_in_dict_multilist(self, list, dictionary, type="values"):
+        """Checks if at least one element of the given list is into one of the
+        lists included into the given dictionary.
+        The function can compare key or values of the dictionary, based on
+        the given type of comparison.
+
+        Args:
+            list(list): the list of strings to look for.
+            dictionary(dict): the dictionary of lists in which the strings
+                should be searched.
+            type(str): define if the given string should be searched into keys
+                or values of the given dictionary (possible values:
+                'keys|values', default 'values')
+
+        Returns:
+            True if at least one string is found, False otherwise.
+        """
+        type = type.lower()
+
+        for string in list:
+            if self.string_in_dict_multilist(string, dictionary, type):
+                return True
+
         return False

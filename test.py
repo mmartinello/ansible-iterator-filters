@@ -81,5 +81,53 @@ class IteratorFiltersTest(unittest.TestCase):
         string = "quux"
         self.assertFalse(self.filter.in_list_multidict(string, list))
 
+    def test_string_in_dict_multilist(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        string = "foo"
+        self.assertTrue(self.filter.string_in_dict_multilist(string,
+                                                             dictionary))
+
+    def test_string_not_in_dict_multilist(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        string = "quux"
+        self.assertFalse(self.filter.string_in_dict_multilist(string,
+                                                              dictionary))
+
+    def test_string_in_dict_multilist_keys(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        string = "key1"
+        self.assertTrue(self.filter.string_in_dict_multilist(string,
+                                                             dictionary,
+                                                             "keys"))
+
+    def test_list_in_dict_multilist(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        list = ["qux", "quux"]
+
+        self.assertTrue(self.filter.list_in_dict_multilist(list,
+                                                           dictionary))
+
+    def test_list_not_in_dict_multilist(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        list = ["bazz", "quux"]
+
+        self.assertFalse(self.filter.list_in_dict_multilist(list,
+                                                            dictionary))
+
 if __name__ == '__main__':
     unittest.main()
