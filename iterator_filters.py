@@ -29,15 +29,15 @@ class FilterModule(object):
                 }
         """
         return {
-            'in_list': self.in_list,
-            'in_dict': self.in_dict,
-            'in_list_multilist': self.in_list_multilist,
-            'in_list_multidict': self.in_list_multidict,
+            'string_in_list': self.string_in_list,
+            'string_in_dict': self.string_in_dict,
+            'string_in_list_multilist': self.string_in_list_multilist,
+            'string_in_list_multidict': self.string_in_list_multidict,
             'string_in_dict_multilist': self.string_in_dict_multilist,
             'list_in_dict_multilist': self.list_in_dict_multilist
         }
 
-    def in_list(self, string, list):
+    def string_in_list(self, string, list):
         """Checks if a given string is into one of the value of the given list.
 
         Args:
@@ -49,7 +49,7 @@ class FilterModule(object):
         """
         return string in list
 
-    def in_dict(self, string, dictionary, type="values"):
+    def string_in_dict(self, string, dictionary, type="values"):
         """Checks if a given string is into the given dictionary.
         The function can compare key or values of the dictionary, based on the
         given type of comparison.
@@ -76,7 +76,7 @@ class FilterModule(object):
                 return True
         return False
 
-    def in_list_multilist(self, string, lists):
+    def string_in_list_multilist(self, string, lists):
         """Checks if a given string is into one of the value of one of the
         lists present into the given list of lists.
 
@@ -93,7 +93,7 @@ class FilterModule(object):
                 return True
         return False
 
-    def in_list_multidict(self, string, dictionaries, type="values"):
+    def string_in_list_multidict(self, string, dictionaries, type="values"):
         """Checks if a given string is into one of the dictionaries included
         into the given list.
         The function can compare key or values of the dictionaries, based on

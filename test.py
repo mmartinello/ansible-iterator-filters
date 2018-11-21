@@ -10,12 +10,12 @@ class IteratorFiltersTest(unittest.TestCase):
     def test_string_in_list(self):
         list = ["foo", "bar"]
         string = "foo"
-        self.assertTrue(self.filter.in_list(string, list))
+        self.assertTrue(self.filter.string_in_list(string, list))
 
     def test_string_not_in_list(self):
         list = ["foo", "bar"]
         string = "baz"
-        self.assertFalse(self.filter.in_list(string, list))
+        self.assertFalse(self.filter.string_in_list(string, list))
 
     def test_string_in_dict_values(self):
         dict = {
@@ -23,7 +23,7 @@ class IteratorFiltersTest(unittest.TestCase):
             'key2': "bar"
         }
         string = "foo"
-        self.assertTrue(self.filter.in_dict(string, dict))
+        self.assertTrue(self.filter.string_in_dict(string, dict))
 
     def test_string_not_in_dict_values(self):
         dict = {
@@ -31,7 +31,7 @@ class IteratorFiltersTest(unittest.TestCase):
             'key2': "bar"
         }
         string = "baz"
-        self.assertFalse(self.filter.in_dict(string, dict, "Values"))
+        self.assertFalse(self.filter.string_in_dict(string, dict, "Values"))
 
     def test_string_in_dict_keys(self):
         dict = {
@@ -39,7 +39,7 @@ class IteratorFiltersTest(unittest.TestCase):
             'key2': "bar"
         }
         string = "key1"
-        self.assertTrue(self.filter.in_dict(string, dict, "keys"))
+        self.assertTrue(self.filter.string_in_dict(string, dict, "keys"))
 
     def test_string_not_in_dict_keys(self):
         dict = {
@@ -47,7 +47,7 @@ class IteratorFiltersTest(unittest.TestCase):
             'key2': "bar"
         }
         string = "key3"
-        self.assertFalse(self.filter.in_dict(string, dict, "Keys"))
+        self.assertFalse(self.filter.string_in_dict(string, dict, "Keys"))
 
     def test_string_in_list_multilist(self):
         list = [
@@ -55,7 +55,7 @@ class IteratorFiltersTest(unittest.TestCase):
             ["baz", "qux", "quux"]
         ]
         string = "foo"
-        self.assertTrue(self.filter.in_list_multilist(string, list))
+        self.assertTrue(self.filter.string_in_list_multilist(string, list))
 
     def test_string_not_in_list_multilist(self):
         list = [
@@ -63,7 +63,7 @@ class IteratorFiltersTest(unittest.TestCase):
             ["baz", "qux", "quux"]
         ]
         string = "corge"
-        self.assertFalse(self.filter.in_list_multilist(string, list))
+        self.assertFalse(self.filter.string_in_list_multilist(string, list))
 
     def test_string_in_list_multidict(self):
         list = [
@@ -71,7 +71,7 @@ class IteratorFiltersTest(unittest.TestCase):
             {'key3': "baz", 'key4': "qux"}
         ]
         string = "foo"
-        self.assertTrue(self.filter.in_list_multidict(string, list))
+        self.assertTrue(self.filter.string_in_list_multidict(string, list))
 
     def test_string_not_in_list_multidict(self):
         list = [
@@ -79,7 +79,7 @@ class IteratorFiltersTest(unittest.TestCase):
             {'key3': "baz", 'key4': "qux"}
         ]
         string = "quux"
-        self.assertFalse(self.filter.in_list_multidict(string, list))
+        self.assertFalse(self.filter.string_in_list_multidict(string, list))
 
     def test_string_in_dict_multilist(self):
         dictionary = {
