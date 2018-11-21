@@ -30,7 +30,8 @@ class FilterModule(object):
         """
         return {
             'in_list': self.in_list,
-            'in_dict': self.in_dict
+            'in_dict': self.in_dict,
+            'in_list_multilist': self.in_list_multilist
         }
 
     def in_list(self, string, list):
@@ -41,8 +42,7 @@ class FilterModule(object):
             list(list): the list in which the string should be searched.
 
         Returns:
-            True if the string is included in at least one of the list's
-                values, False otherwise.
+            True if the string is found, False otherwise.
         """
         return string in list
 
@@ -58,8 +58,7 @@ class FilterModule(object):
                 'keys|values', default 'values')
 
         Returns:
-            True if the string is included in at least one of the dictionary's
-                values, False otherwise.
+            True if the string is found, False otherwise.
         """
         for key, value in dictionary.items():
             type = type.lower()
@@ -69,5 +68,22 @@ class FilterModule(object):
                 compare = value
 
             if string == compare:
+                return True
+        return False
+
+    def in_list_multilist(self, string, lists):
+        """Checks if a given string is into one of the value of one of the
+        lists present into the given list of lists.
+
+        Args:
+            string(str): the string to look for.
+            lists(list): the list of lists in which the string should be
+                searched.
+
+        Returns:
+            True if the string is found, False otherwise.
+        """
+        for list in lists:
+            if self.in_list(string, list):
                 return True
         return False

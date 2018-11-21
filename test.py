@@ -49,5 +49,21 @@ class IteratorFiltersTest(unittest.TestCase):
         string = "key3"
         self.assertFalse(self.filter.in_dict(string, dict, "Keys"))
 
+    def test_string_in_list_multilist(self):
+        list = [
+            ["foo", "bar"],
+            ["baz", "qux", "quux"]
+        ]
+        string = "foo"
+        self.assertTrue(self.filter.in_list_multilist(string, list))
+
+    def test_string_not_in_list_multilist(self):
+        list = [
+            ["foo", "bar"],
+            ["baz", "qux", "quux"]
+        ]
+        string = "corge"
+        self.assertFalse(self.filter.in_list_multilist(string, list))
+
 if __name__ == '__main__':
     unittest.main()
