@@ -5,7 +5,7 @@ of object.
 Filters are available to check if the value is present in different type of
 given objects:
 - a single list
-- a single dictionary
+- a single dictionary (key or values)
 - a list containing multiple lists
 - a list containing multiple dictionaries
 - a dictionary containing multiple lists
