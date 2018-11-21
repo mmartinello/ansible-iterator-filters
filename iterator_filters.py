@@ -46,19 +46,28 @@ class FilterModule(object):
         """
         return string in list
 
-    def in_dict(self, string, dictionary):
+    def in_dict(self, string, dictionary, type="values"):
         """Checks if a given string is into one of the value of the given list.
 
         Args:
             string(str): the string to look for.
             dictionary(dict): the dictionary in which the string should be
                 searched.
+            type(str): define if the given string should be searched into keys
+                or values of the given dictionary (possible values:
+                'keys|values', default 'values')
 
         Returns:
             True if the string is included in at least one of the dictionary's
                 values, False otherwise.
         """
         for key, value in dictionary.items():
-            if string == value:
+            type = type.lower()
+            if type == "keys":
+                compare = key
+            else:
+                compare = value
+
+            if string == compare:
                 return True
         return False
