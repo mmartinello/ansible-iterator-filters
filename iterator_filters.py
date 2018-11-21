@@ -89,7 +89,7 @@ class FilterModule(object):
             True if the string is found, False otherwise.
         """
         for list in lists:
-            if self.in_list(string, list):
+            if self.string_in_list(string, list):
                 return True
         return False
 
@@ -111,7 +111,7 @@ class FilterModule(object):
             True if the string is found, False otherwise.
         """
         for dictionary in dictionaries:
-            if self.in_dict(string, dictionary, type):
+            if self.string_in_dict(string, dictionary, type):
                 return True
         return False
 
@@ -139,7 +139,7 @@ class FilterModule(object):
                 if string == key:
                     return True
             else:
-                if self.in_list(string, list):
+                if self.string_in_list(string, list):
                     return True
         return False
 
@@ -165,5 +165,4 @@ class FilterModule(object):
         for string in list:
             if self.string_in_dict_multilist(string, dictionary, type):
                 return True
-
         return False
