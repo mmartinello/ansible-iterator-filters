@@ -94,7 +94,7 @@ class FilterModule(object):
         return False
 
     def in_list_multidict(self, string, dictionaries, type="values"):
-        """Checks if a given string is into ont of the dictionaries included
+        """Checks if a given string is into one of the dictionaries included
         into the given list.
         The function can compare key or values of the dictionaries, based on
         the given type of comparison.
