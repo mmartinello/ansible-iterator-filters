@@ -31,7 +31,8 @@ class FilterModule(object):
         return {
             'in_list': self.in_list,
             'in_dict': self.in_dict,
-            'in_list_multilist': self.in_list_multilist
+            'in_list_multilist': self.in_list_multilist,
+            'in_list_multidict': self.in_list_multidict
         }
 
     def in_list(self, string, list):
@@ -47,7 +48,9 @@ class FilterModule(object):
         return string in list
 
     def in_dict(self, string, dictionary, type="values"):
-        """Checks if a given string is into one of the value of the given list.
+        """Checks if a given string is into the given dictionary.
+        The function can compare key or values of the dictionary, based on the
+        given type of comparison.
 
         Args:
             string(str): the string to look for.
@@ -85,5 +88,27 @@ class FilterModule(object):
         """
         for list in lists:
             if self.in_list(string, list):
+                return True
+        return False
+
+    def in_list_multidict(self, string, dictionaries, type="values"):
+        """Checks if a given string is into ont of the dictionaries included
+        into the given list.
+        The function can compare key or values of the dictionaries, based on
+        the given type of comparison.
+
+        Args:
+            string(str): the string to look for.
+            dictionaries(list): the list of dictionaries in which the string
+                should be searched.
+            type(str): define if the given string should be searched into keys
+                or values of the given dictionary (possible values:
+                'keys|values', default 'values')
+
+        Returns:
+            True if the string is found, False otherwise.
+        """
+        for dictionary in dictionaries:
+            if self.in_dict(string, dictionary, type):
                 return True
         return False
