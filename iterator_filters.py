@@ -34,7 +34,8 @@ class FilterModule(object):
             'string_in_list_multilist': self.string_in_list_multilist,
             'string_in_list_multidict': self.string_in_list_multidict,
             'string_in_dict_multilist': self.string_in_dict_multilist,
-            'list_in_dict_multilist': self.list_in_dict_multilist
+            'list_in_dict_multilist': self.list_in_dict_multilist,
+            'in_dict_multilist': self.in_dict_multilist
         }
 
     def string_in_list(self, needle, haystack):
