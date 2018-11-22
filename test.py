@@ -49,6 +49,16 @@ class IteratorFiltersTest(unittest.TestCase):
         string = "key3"
         self.assertFalse(self.filter.string_in_dict(string, dict, "Keys"))
 
+    def test_string_in_dict_keys_with_not_supported_search_type(self):
+        dict = {
+            'key1': "foo",
+            'key2': "bar"
+        }
+        string = "key3"
+
+        with self.assertRaises(ValueError):
+            self.filter.string_in_dict(string, dict, "foo")
+
     def test_string_in_list_multilist(self):
         list = [
             ["foo", "bar"],
@@ -128,6 +138,16 @@ class IteratorFiltersTest(unittest.TestCase):
 
         self.assertFalse(self.filter.list_in_dict_multilist(list,
                                                             dictionary))
+
+    def test_in_dict_multilist(self):
+        dictionary = {
+            'key1': ["foo", "bar"],
+            'key2': ["baz", "qux"]
+        }
+        list = ["baz", "quux"]
+        string = "foo"
+        self.assertTrue(self.filter.in_dict_multilist(string, dictionary))
+        self.assertTrue(self.filter.in_dict_multilist(list, dictionary))
 
 if __name__ == '__main__':
     unittest.main()

@@ -37,132 +37,152 @@ class FilterModule(object):
             'list_in_dict_multilist': self.list_in_dict_multilist
         }
 
-    def string_in_list(self, string, list):
+    def string_in_list(self, needle, haystack):
         """Checks if a given string is into one of the value of the given list.
 
         Args:
-            string(str): the string to look for.
-            list(list): the list in which the string should be searched.
+            needle(str): the string to look for.
+            haystack(list): the list in which the string should be searched.
 
         Returns:
-            True if the string is found, False otherwise.
+            True if the needle is found, False otherwise.
         """
-        return string in list
+        return needle in haystack
 
-    def string_in_dict(self, string, dictionary, type="values"):
+    def string_in_dict(self, needle, haystack, search_type="values"):
         """Checks if a given string is into the given dictionary.
         The function can compare key or values of the dictionary, based on the
         given type of comparison.
 
         Args:
-            string(str): the string to look for.
-            dictionary(dict): the dictionary in which the string should be
+            needle(str): the string to look for.
+            haystack(dict): the dictionary in which the string should be
                 searched.
-            type(str): define if the given string should be searched into keys
-                or values of the given dictionary (possible values:
+            search_type(str): define if the given string should be searched
+                into keys or values of the given dictionary (possible values:
                 'keys|values', default 'values')
 
         Returns:
-            True if the string is found, False otherwise.
+            True if the needle is found, False otherwise.
         """
-        type = type.lower()
-        for key, value in dictionary.items():
-            if type == "keys":
-                compare = key
-            else:
-                compare = value
 
-            if string == compare:
+        # Check
+        supported_types = ["keys", "values"]
+        search_type = search_type.lower()
+        if search_type not in supported_types:
+            msg = 'Unsupported search_type: {}, accepted values: {}'
+            msg = msg.format(search_type, "|".join(supported_types))
+            raise ValueError(msg)
+
+        for key, value in haystack.items():
+            if search_type == "keys":
+                compare = key
+            elif search_type == "values":
+                compare = value
+            else:
+                raise NotImplementedError()
+
+            if needle == compare:
                 return True
         return False
 
-    def string_in_list_multilist(self, string, lists):
+    def string_in_list_multilist(self, needle, haystack):
         """Checks if a given string is into one of the value of one of the
         lists present into the given list of lists.
 
         Args:
-            string(str): the string to look for.
-            lists(list): the list of lists in which the string should be
+            needle(str): the string to look for.
+            haystack(list): the list of lists in which the string should be
                 searched.
 
         Returns:
-            True if the string is found, False otherwise.
+            True if the needle is found, False otherwise.
         """
-        for list in lists:
-            if self.string_in_list(string, list):
+        for item in haystack:
+            if self.string_in_list(needle, item):
                 return True
         return False
 
-    def string_in_list_multidict(self, string, dictionaries, type="values"):
+    def string_in_list_multidict(self, needle, haystack, search_type="values"):
         """Checks if a given string is into one of the dictionaries included
         into the given list.
         The function can compare key or values of the dictionaries, based on
         the given type of comparison.
 
         Args:
-            string(str): the string to look for.
-            dictionaries(list): the list of dictionaries in which the string
+            needle(str): the string to look for.
+            haystack(list): the list of dictionaries in which the string
                 should be searched.
-            type(str): define if the given string should be searched into keys
-                or values of the given dictionary (possible values:
+            search_type(str): define if the given string should be searched
+                into keys or values of the given dictionary (possible values:
                 'keys|values', default 'values')
 
         Returns:
-            True if the string is found, False otherwise.
+            True if the needle is found, False otherwise.
         """
-        for dictionary in dictionaries:
-            if self.string_in_dict(string, dictionary, type):
+        for item in haystack:
+            if self.string_in_dict(needle, item, search_type):
                 return True
         return False
 
-    def string_in_dict_multilist(self, string, dictionary, type="values"):
+    def string_in_dict_multilist(self, needle, dictionary,
+                                 search_type="values"):
         """Checks if a given value is into one of the lists included
         into the given dictionary.
         The function can compare key or values of the dictionary, based on
         the given type of comparison.
 
         Args:
-            string(str): the string to look for.
+            needle(str): the string to look for.
             dictionary(dict): the dictionary of lists in which the string
                 should be searched.
-            type(str): define if the given string should be searched into keys
-                or values of the given dictionary (possible values:
+            search_type(str): define if the given string should be searched
+                into keys or values of the given dictionary (possible values:
                 'keys|values', default 'values')
 
         Returns:
-            True if the string is found, False otherwise.
+            True if the needle is found, False otherwise.
         """
-        type = type.lower()
+        search_type = search_type.lower()
 
         for key, list in dictionary.items():
-            if type == "keys":
-                if string == key:
+            if search_type == "keys":
+                if needle == key:
                     return True
             else:
-                if self.string_in_list(string, list):
+                if self.string_in_list(needle, list):
                     return True
         return False
 
-    def list_in_dict_multilist(self, list, dictionary, type="values"):
+    def list_in_dict_multilist(self, needles, haystack, search_type="values"):
         """Checks if at least one element of the given list is into one of the
         lists included into the given dictionary.
         The function can compare key or values of the dictionary, based on
         the given type of comparison.
 
         Args:
-            list(list): the list of strings to look for.
-            dictionary(dict): the dictionary of lists in which the strings
+            needles(list): the list of strings to look for.
+            haystack(dict): the dictionary of lists in which the strings
                 should be searched.
-            type(str): define if the given string should be searched into keys
-                or values of the given dictionary (possible values:
+            search_type(str): define if the given string should be searched
+                into keys or values of the given dictionary (possible values:
                 'keys|values', default 'values')
 
         Returns:
             True if at least one string is found, False otherwise.
         """
-        type = type.lower()
-
-        for string in list:
-            if self.string_in_dict_multilist(string, dictionary, type):
+        for item in needles:
+            if self.string_in_dict_multilist(item, haystack, search_type):
                 return True
         return False
+
+    def in_dict_multilist(self, needle, haystack, search_type="values"):
+        needle_type = type(needle)
+
+        if needle_type is str:
+            return self.string_in_dict_multilist(needle, haystack, search_type)
+        elif needle_type is list:
+            return self.list_in_dict_multilist(needle, haystack, search_type)
+        else:
+            msg = 'Unsupported given needle type: {}'.format(needle_type)
+            raise TypeError(msg)
