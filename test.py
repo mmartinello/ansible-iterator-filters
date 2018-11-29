@@ -17,6 +17,23 @@ class IteratorFiltersTest(unittest.TestCase):
         string = "baz"
         self.assertFalse(self.filter.string_in_list(string, list))
 
+    def test_list_in_list(self):
+        needle = ["foo", "bar"]
+        haystack = ["foo", "qux", "quux"]
+        self.assertTrue(self.filter.list_in_list(needle, haystack))
+
+    def test_list_not_in_list(self):
+        needle = ["bazz", "bar"]
+        haystack = ["baz", "qux", "quux"]
+        self.assertFalse(self.filter.list_in_list(needle, haystack))
+
+    def test_in_list(self):
+        haystack = ["foo", "qux", "quux"]
+        string = "foo"
+        list = ["foo", "bar"]
+        self.assertTrue(self.filter.in_list(string, haystack))
+        self.assertTrue(self.filter.in_list(list, haystack))
+
     def test_string_in_dict_values(self):
         dict = {
             'key1': "foo",

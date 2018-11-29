@@ -30,6 +30,8 @@ class FilterModule(object):
         """
         return {
             'string_in_list': self.string_in_list,
+            'list_in_list': self.list_in_list,
+            'in_list': self.in_list,
             'string_in_dict': self.string_in_dict,
             'string_in_list_multilist': self.string_in_list_multilist,
             'string_in_list_multidict': self.string_in_list_multidict,
@@ -49,6 +51,43 @@ class FilterModule(object):
             True if the needle is found, False otherwise.
         """
         return needle in haystack
+
+    def list_in_list(self, needle, haystack):
+        """Checks if a given list (needle) has at least one element which is
+        included into one of the value of the given list (haystack).
+
+        Args:
+            needle(list): the list which contains the string to look for.
+            haystack(list): the list in which the elements should be searched.
+
+        Returns:
+            True if at least one element of needle is found, False otherwise.
+        """
+        for item in needle:
+            if self.string_in_list(item, haystack):
+                return True
+        return False
+
+    def in_list(self, needle, haystack):
+        """Checks if a given object (needle) has at least one element which is
+        included into one of the value of the given list (haystack).
+
+        Args:
+            needle(str|list): the object which contains the string to look for.
+            haystack(list): the list in which the elements should be searched.
+
+        Returns:
+            True if at least one element of needle is found, False otherwise.
+        """
+        needle_type = type(needle)
+
+        if needle_type in (str, unicode):
+            return self.string_in_list(needle, haystack)
+        elif needle_type is list:
+            return self.list_in_list(needle, haystack)
+        else:
+            msg = 'Unsupported given needle type: {}'.format(needle_type)
+            raise TypeError(msg)
 
     def string_in_dict(self, needle, haystack, search_type="values"):
         """Checks if a given string is into the given dictionary.
