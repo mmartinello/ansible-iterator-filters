@@ -180,7 +180,7 @@ class FilterModule(object):
     def in_dict_multilist(self, needle, haystack, search_type="values"):
         needle_type = type(needle)
 
-        if needle_type is str:
+        if needle_type in (str, unicode):
             return self.string_in_dict_multilist(needle, haystack, search_type)
         elif needle_type is list:
             return self.list_in_dict_multilist(needle, haystack, search_type)
