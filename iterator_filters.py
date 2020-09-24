@@ -12,6 +12,8 @@ given objects:
 - a dictionary containing multiple dictionaries
 """
 
+import sys
+
 
 class FilterModule(object):
     def filters(self):
@@ -81,7 +83,12 @@ class FilterModule(object):
         """
         needle_type = type(needle)
 
-        if needle_type in (str, unicode):
+        if (sys.version_info > (3, 0)):
+            type_list = [str]
+        else:
+            type_list = [str, unicode]
+
+        if needle_type in type_list:
             return self.string_in_list(needle, haystack)
         elif needle_type is list:
             return self.list_in_list(needle, haystack)
@@ -219,7 +226,12 @@ class FilterModule(object):
     def in_dict_multilist(self, needle, haystack, search_type="values"):
         needle_type = type(needle)
 
-        if needle_type in (str, unicode):
+        if (sys.version_info > (3, 0)):
+            type_list = [str]
+        else:
+            type_list = [str, unicode]
+
+        if needle_type in type_list:
             return self.string_in_dict_multilist(needle, haystack, search_type)
         elif needle_type is list:
             return self.list_in_dict_multilist(needle, haystack, search_type)
